@@ -19,7 +19,24 @@ class MainActivity : AppCompatActivity() {
         /* Step 1: Populate this array */
         val numberArray = Array(50){i -> (i + 1) * 2}
 
-        spinner.adapter = TextSizeAdapter(this@MainActivity, numberArray)
+        with (spinner) {
+            /* Step 2: Create adapter to display items from array in Spinner */
+            adapter = TextSizeAdapter(this@MainActivity, numberArray)
+
+            // Step 3: Change TextView's text size to the number selected in the Spinner */
+            onItemSelectedListener = object : OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    parent?.run {
+                        displayTextView.textSize = getItemAtPosition(position).toString().toFloat()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+            }
+        }
 
     }
 }
